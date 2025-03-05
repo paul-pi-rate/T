@@ -1,1 +1,526 @@
 https://chaitanya-makala.notion.site/Computer-Networks-Lab-Material-1834599ff1168096af83e748eb2313e4
+# Computer Networks Lab Material
+
+## **Experiment 1:** Study of Network Devices and Connecting Computers in a Local Area Network (LAN)
+
+---
+
+### **Objective:**
+
+1. Understand different types of **network devices** and their functions.
+2. Learn how to **connect computers in a Local Area Network (LAN)**.
+3. Explore the **role of each network device** in data transmission.
+4. Implement a basic **LAN setup** and test connectivity between devices.
+
+---
+
+### **Theory:**
+
+### **What are Network Devices?**
+
+Network devices are hardware components that facilitate communication between computers and other devices in a network. They enable the transmission, reception, and routing of data efficiently.
+
+### **Types of Network Devices and Their Functions:**
+
+1. **Hub:**
+    - A hub is a basic networking device that connects multiple computers in a LAN.
+    - It operates at the **physical layer (Layer 1)** of the OSI model.
+    - Data sent to a hub is broadcast to all connected devices.
+2. **Switch:**
+    - A switch is an intelligent device that connects multiple devices in a network.
+    - It operates at the **data link layer (Layer 2)** and directs data only to the intended recipient.
+    - Reduces network congestion compared to hubs.
+3. **Router:**
+    - A router connects different networks and directs data packets based on IP addresses.
+    - It operates at the **network layer (Layer 3)** and enables internet connectivity.
+    - Used to connect **LANs to the internet (WANs).**
+4. **Modem:**
+    - Converts digital signals to analog signals (and vice versa) for internet connectivity.
+    - Connects computers to **ISP (Internet Service Provider)** networks.
+5. **Access Point (AP):**
+    - Enables wireless communication in a network.
+    - Extends the range of Wi-Fi in a LAN.
+6. **Gateway:**
+    - A gateway acts as a bridge between different networks using different protocols.
+    - Used in enterprise networks for security and traffic management.
+7. **Network Interface Card (NIC):**
+    - A hardware component that enables a device to connect to a network (wired or wireless).
+    - Each NIC has a unique **MAC address.**
+
+### **Connecting Computers in a Local Area Network (LAN)**
+
+A **Local Area Network (LAN)** is a network that connects computers within a limited geographical area (e.g., office, home, school). To set up a LAN:
+
+1. **Select the Network Topology:**
+    - **Star Topology**: Uses a central switch/hub.
+    - **Bus Topology**: Uses a single backbone cable.
+    - **Mesh Topology**: Every device is interconnected.
+2. **Connect the Devices:**
+    - Use **Ethernet cables** (RJ-45) to connect computers to a switch/hub.
+    - Connect the switch to a **router/modem** for internet access.
+    - Configure **wireless access points (APs)** for Wi-Fi connectivity.
+3. **Assign IP Addresses:**
+    - Use **DHCP (Dynamic Host Configuration Protocol)** to assign IPs automatically.
+    - Alternatively, set **static IP addresses** manually.
+4. **Test the Network:**
+    - Use the `ping` command to check connectivity between computers.
+    - Example: `ping 192.168.1.1` (checks connection with another device on the LAN).
+
+---
+
+### **Practical Applications of Network Devices:**
+
+1. **Enterprise Networks:** Used to connect multiple departments in an organization.
+2. **Home Networks:** Routers and switches enable internet and device sharing.
+3. **Educational Institutions:** Used to connect classrooms and laboratories.
+4. **Data Centers:** Large-scale networks use switches and routers for high-speed communication.
+5. **Wireless Networks:** Access points provide seamless connectivity.
+
+---
+
+### **Materials Required:**
+
+1. **Network devices** (Hub, Switch, Router, Access Point, etc.).
+2. **Ethernet cables (RJ-45).**
+3. **Computers or Virtual Machines.**
+4. **Network configuration software (e.g., Cisco Packet Tracer, Wireshark).**
+
+---
+
+### **Experiment Procedure:**
+
+### **Part 1: Identifying Network Devices**
+
+1. Observe and identify different network devices (hub, switch, router, modem, etc.).
+2. Document their functions and OSI model layers they operate on.
+3. Understand how they interact with data transmission.
+
+### **Part 2: Setting Up a Basic LAN**
+
+1. **Connect two or more computers** using a switch/hub.
+2. Assign **IP addresses** manually or enable **DHCP**.
+3. Verify **network connectivity** using the `ping` command.
+4. **Test internet access** by connecting a router to the network.
+5. Use **Wireshark** to capture network packets and analyze data flow.
+
+### **Part 3: Troubleshooting Network Issues**
+
+1. Check **physical connections** (cables, NIC, etc.).
+2. Verify **IP configurations** using `ipconfig` (Windows) or `ifconfig` (Linux/Mac).
+3. Restart network devices if issues persist.
+4. Use `tracert` (Windows) or `traceroute` (Linux/Mac) to check network path issues.
+
+---
+
+### **Python Code Example: Checking Network Connectivity**
+
+```python
+import os
+
+# Function to ping a device in the network
+def check_network_connection(ip_address):
+    response = os.system(f"ping -c 4 {ip_address}")
+    if response == 0:
+        print(f"Device {ip_address} is reachable.")
+    else:
+        print(f"Device {ip_address} is not reachable.")
+
+# Example Usage
+ip_to_check = "192.168.1.1"  # Change to the target IP address
+check_network_connection(ip_to_check)
+```
+
+### **Expected Output:**
+
+```
+Device 192.168.1.1 is reachable.
+```
+
+OR
+
+```
+Device 192.168.1.1 is not reachable.
+```
+
+---
+
+### **Conclusion:**
+
+In this experiment, we studied **network devices** and their role in communication. We also successfully **set up a Local Area Network (LAN)** and tested connectivity. Understanding network devices and their functionalities is essential for designing efficient network infrastructures.
+
+---
+
+## **Experiment 2:** Study of Data Link Layer Framing Methods: Character Stuffing and Bit Stuffing
+
+---
+
+### **Objective:**
+
+1. Understand the concept of framing in the data link layer.
+2. Implement and analyze character stuffing and bit stuffing methods.
+3. Develop programs to demonstrate the framing methods with examples.
+
+---
+
+### **Theory:**
+
+### **OSI Model (Detailed)**
+
+The OSI (Open Systems Interconnection) model is a conceptual framework used to standardize and understand the communication process in a network. It divides the communication process into seven distinct layers, each with specific functions:
+
+1. **Physical Layer**: Responsible for transmitting raw bit streams over a physical medium (e.g., cables, wireless).
+2. **Data Link Layer**: Ensures reliable node-to-node data transfer, error detection, and framing. Framing methods like character stuffing and bit stuffing are applied at this layer.
+3. **Network Layer**: Handles logical addressing and routing of data packets (e.g., IP addresses).
+4. **Transport Layer**: Ensures end-to-end communication and reliable data transfer using protocols like TCP and UDP.
+5. **Session Layer**: Manages sessions or connections between applications.
+6. **Presentation Layer**: Translates data formats between applications (e.g., encryption, compression).
+7. **Application Layer**: Provides network services directly to end-users (e.g., HTTP, FTP).
+
+Understanding the OSI model helps in analyzing the role of each layer and troubleshooting network issues effectively.
+
+### **OSI Model Simplified**
+
+Imagine the internet is like sending a letter. To make sure the letter reaches the correct person, it goes through several steps. The OSI model is like a checklist for these steps:
+
+1. **Physical Layer:** It’s the postman who delivers the letter. It handles sending the actual signals (like envelopes in mail).
+2. **Data Link Layer:** This is like adding the address and making sure the letter isn’t damaged. It divides data into small chunks called frames.
+3. **Network Layer:** Think of this as the GPS, ensuring the letter takes the correct route.
+4. **Transport Layer:** Ensures your letter arrives safely and in order.
+5. **Session Layer:** Manages conversations, like remembering the topic of your letter series.
+6. **Presentation Layer:** Translates languages, such as encoding and decoding the letter.
+7. **Application Layer:** This is the final delivery to the person—like opening an email or webpage.
+
+### **Data Link Layer Overview**
+
+The data link layer ensures that messages (frames) are sent neatly and without mistakes. Frames are like envelopes for the letter, with clear start and end markers so nothing gets lost.
+
+### **Framing**
+
+Framing is a crucial process that involves marking the start and end of the data so that the receiver can correctly interpret it. Two common framing methods are:
+
+1. **Character Stuffing:**
+    - In this method, special characters (called delimiters) mark the start and end of a frame.
+    - If the delimiter character appears in the data, an escape character is inserted to differentiate it from the delimiter.
+    - Example:
+        - Data: `Hello | World`
+        - Delimiter: `|`
+        - After stuffing: `|Hello \| World|`
+2. **Bit Stuffing:**
+    - Bit stuffing uses a specific bit pattern (flag) to indicate the start and end of a frame.
+    - If the flag pattern appears in the data, an extra bit is inserted after every five consecutive `1`s to avoid confusion.
+    - Example:
+        - Data: `01111110`
+        - After stuffing: `011111010`
+
+### **Framing Simplified**
+
+Framing is simply about putting clear "start" and "end" signs around your message so the receiver knows where it begins and ends. Two ways to do this are:
+
+1. **Character Stuffing:**
+    - If your message has special words like "STOP," you add an extra word (escape word) so it’s not confused with the actual stop signal.
+    - Example:
+        - Message: `Hello | World`
+        - Special Word: `|`
+        - Stuffed Message: `|Hello \| World|`
+2. **Bit Stuffing:**
+    - If your message uses numbers and has too many `1`s in a row, you add an extra `0` to prevent confusion.
+    - Example:
+        - Message: `01111110`
+        - Stuffed Message: `011111010`
+
+---
+
+### **Practical Examples of Framing**
+
+1. **Chat Applications (Character Stuffing):**
+    - In chat systems, each message is treated as a frame. To ensure that special characters like `|` (used for formatting) don’t confuse the system, character stuffing is used to escape these characters.
+    - Example:
+        - User Message: `Hi | How are you?`
+        - Sent Data: `|Hi \| How are you?|`
+2. **File Transfers (Bit Stuffing):**
+    - When sending binary files over a network, the data might include bit patterns identical to frame delimiters. Bit stuffing ensures that these patterns don’t break the framing.
+    - Example:
+        - Binary Data: `1101111110111110`
+        - Stuffed Data: `11011111010111110`
+3. **Streaming Protocols (Character Stuffing):**
+    - In live video or audio streaming, metadata and content frames are separated using special delimiters. Character stuffing ensures that content data doesn’t conflict with these delimiters.
+    - Example:
+        - Content: `Frame | Metadata`
+        - Stuffed Data: `|Frame \| Metadata|`
+4. **Communication in Vehicles (Bit Stuffing):**
+    - Automotive systems use the Controller Area Network (CAN) protocol for communication. Bit stuffing prevents synchronization issues caused by continuous `1`s in the transmitted data.
+    - Example:
+        - Data: `111111100101`
+        - Stuffed Data: `1111101100101`
+5. **Wireless Networks (Bit Stuffing):**
+    - Wireless protocols, such as those used in IoT devices, use bit stuffing to maintain reliable communication in noisy environments.
+    - Example:
+        - Transmitted Data: `011111101010`
+        - Stuffed Data: `0111110101010`
+
+---
+
+### **Code Examples with Explanation**
+
+### Character Stuffing
+
+**Explanation:** Character stuffing involves inserting escape characters to ensure special delimiters are not misinterpreted as part of the data.
+
+```python
+# Character Stuffing Implementation
+def character_stuffing(data, delimiter="|", escape="\\"):
+    stuffed_data = delimiter  # Start with the delimiter
+    for char in data:
+        if char == delimiter:  # If special character, add escape
+            stuffed_data += escape
+        stuffed_data += char
+    stuffed_data += delimiter  # End with the delimiter
+    return stuffed_data
+
+def character_de_stuffing(stuffed_data, delimiter="|", escape="\\"):
+    data = ""
+    i = 1  # Skip the starting delimiter
+    while i < len(stuffed_data) - 1:  # Skip the ending delimiter
+        if stuffed_data[i] == escape:
+            i += 2  # Skip the escape character
+        data += stuffed_data[i]
+        i += 1
+    return data
+
+# Example Usage
+data = "Hello | World"
+print("Original Data:", data)
+stuffed = character_stuffing(data)
+print("Stuffed Data:", stuffed)
+destuffed = character_de_stuffing(stuffed)
+print("De-Stuffed Data:", destuffed)
+
+```
+
+**Output:**
+
+```
+Original Data: Hello | World
+Stuffed Data: |Hello \| World|
+De-Stuffed Data: Hello | World
+
+```
+
+### Bit Stuffing
+
+**Explanation:** Bit stuffing involves inserting a `0` after every sequence of five consecutive `1`s to differentiate them from reserved flags.
+
+```python
+# Bit Stuffing Implementation
+def bit_stuffing(data):
+    stuffed_data = ""
+    count = 0
+    for bit in data:
+        if bit == '1':
+            count += 1
+        else:
+            count = 0
+        stuffed_data += bit
+        if count == 5:  # Insert '0' after five consecutive '1's
+            stuffed_data += '0'
+            count = 0
+    return stuffed_data
+
+def bit_de_stuffing(stuffed_data):
+    destuffed_data = ""
+    count = 0
+    for bit in stuffed_data:
+        if bit == '1':
+            count += 1
+        else:
+            count = 0
+        destuffed_data += bit
+        if count == 5:  # Skip the stuffed '0'
+            count = 0
+            continue
+    return destuffed_data
+
+# Example Usage
+data = "0111111011111"
+print("Original Data:", data)
+stuffed = bit_stuffing(data)
+print("Stuffed Data:", stuffed)
+destuffed = bit_de_stuffing(stuffed)
+print("De-Stuffed Data:", destuffed)
+
+```
+
+**Output:**
+
+```
+Original Data: 0111111011111
+Stuffed Data: 011111010111110
+De-Stuffed Data: 0111111011111
+
+```
+
+---
+
+### **Bit Stuffing vs Character Stuffing**
+
+| **Aspect** | **Bit Stuffing** | **Character Stuffing** |
+| --- | --- | --- |
+| **Data Type** | Works with binary data. | Works with character (text) data. |
+| **Framing Technique** | Adds a `0` after every five `1`s in a row. | Adds a backslash (`\`) before special symbols in text. |
+| **Example** | `01111110` → `011111010` | `Hello |
+
+---
+
+## **Experiment 3:** Hamming Code Generation and Error Detection & Correction
+
+---
+
+### **Objective:**
+
+1. Understand the concept of Hamming Code for error detection and correction.
+2. Learn how to generate Hamming Code for a given data.
+3. Implement error detection and correction using Hamming Code in Python.
+
+---
+
+### **Theory:**
+
+### **What is Hamming Code?**
+
+Hamming Code is an error-detecting and error-correcting code used in digital communication and storage systems. It allows single-bit error detection and correction to ensure data integrity.
+
+### **Why Use Hamming Code?**
+
+- Ensures reliable communication in noisy channels.
+- Detects and corrects single-bit errors.
+- Used in computer memory (ECC RAM), satellite communication, and digital data transmission.
+
+### **How Hamming Code Works?**
+
+Hamming Code works by adding **parity bits** to data bits. The parity bits are positioned at power-of-2 indices (1, 2, 4, 8, etc.). These parity bits ensure error detection and correction by maintaining even or odd parity.
+
+### **Step-by-Step Guide to Calculate Hamming Code:**
+
+1. **Determine the number of parity bits required:**
+    - Use the formula: `p + d + 1 ≤ 2^p` (where `p` = number of parity bits, `d` = number of data bits).
+    - Example: For 4 data bits (`1011`), we need 3 parity bits (`p = 3`).
+2. **Position the parity bits:**
+    - Place the parity bits at positions that are powers of 2: `2^0 (1st bit), 2^1 (2nd bit), 2^2 (4th bit), etc.`
+    - Example for 4-bit data `1011`: The positions will be:
+        - `P1 P2 D1 P3 D2 D3 D4`
+        - Filling in the data: `P1 P2 1 P3 0 1 1`
+3. **How to Get the Specific Position of the Parity Bits:**
+    - The parity bits are placed at positions that are powers of 2: 1, 2, 4, 8, etc.
+    - Each parity bit is responsible for checking and ensuring the correctness of certain data bits based on binary representation.
+    - The parity bit at position `2^n` covers all bit positions that have a `1` in the `2^n` place of their binary representation.
+    - Example for a 7-bit Hamming Code (4 data bits + 3 parity bits):
+        - **P1 (position 1)** checks bits **1, 3, 5, 7**
+        - **P2 (position 2)** checks bits **2, 3, 6, 7**
+        - **P3 (position 4)** checks bits **4, 5, 6, 7**
+    - These positions ensure that a single-bit error can be detected and corrected.
+4. **Calculate parity bits using XOR operation:**
+    - Compute parity as **XOR of the respective bits**, ensuring even parity.
+    - Example:
+        - `P1 = XOR(1, 0, 1) = 0`
+        - `P2 = XOR(1, 1, 1) = 1`
+        - `P3 = XOR(0, 1, 1) = 0`
+5. **Final encoded data with parity bits:**
+    - The data with computed parity bits will be: `0110011`
+
+### **Steps for Error Detection & Correction:**
+
+1. Receive the data (which may have errors).
+2. Recalculate parity bits and compare with received parity bits.
+3. If a mismatch is found, identify the error bit using binary addition of incorrect parity positions.
+4. Flip the erroneous bit to correct it.
+
+### **Example:**
+
+For **4-bit data** `1011`, the number of parity bits required is **3**. The final encoded data including parity bits will be **0110011**.
+
+---
+
+### **Practical Applications of Hamming Code:**
+
+1. **Error Correction in RAM (ECC Memory).**
+2. **Data Transmission over Noisy Channels (Satellite Communication, Wireless Networks).**
+3. **Barcode and QR Code Error Detection.**
+4. **Hard Disk Data Integrity Verification.**
+5. **Digital Communication Protocols.**
+
+---
+
+### **Materials Required:**
+
+1. Computer with Python installed.
+2. Text editor or IDE.
+
+---
+
+### **Experiment Procedure:**
+
+### **Part 1: Hamming Code Generation**
+
+1. Enter a binary data sequence.
+2. Compute the required number of parity bits.
+3. Insert parity bits at power-of-2 positions.
+4. Calculate parity values based on XOR logic.
+5. Display the final encoded Hamming Code.
+
+### **Part 2: Error Detection and Correction**
+
+1. Receive a Hamming Code (which may contain errors).
+2. Recompute parity bits.
+3. Identify error position using binary sum of incorrect parity bits.
+4. Correct the erroneous bit.
+5. Display corrected data.
+
+---
+
+### **Python Code Implementation:**
+
+```python
+# Function to generate Hamming Code with even parity
+def generate_hamming_code(data):
+    data = list(data)
+    m = len(data)
+    r = 0
+    while (2**r) < (m + r + 1):
+        r += 1
+    
+    hamming_code = []
+    j = 0
+    for i in range(1, m + r + 1):
+        if i & (i - 1) == 0:
+            hamming_code.append('0')  # Initialize parity bits as '0'
+        else:
+            hamming_code.append(data[j])
+            j += 1
+    
+    for i in range(r):
+        position = 2**i
+        parity = 0
+        for j in range(position - 1, len(hamming_code), 2 * position):
+            for k in range(position):  # Ensure we only pick valid bits
+                if j + k < len(hamming_code):  
+                    parity ^= int(hamming_code[j + k])  
+        hamming_code[position - 1] = str(parity)
+    
+    return ''.join(hamming_code)
+
+# Example Usage
+data = "10101"
+encoded_data = generate_hamming_code(data)
+print("Encoded Hamming Code:", encoded_data)
+
+```
+
+---
+
+### **Conclusion:**
+
+This experiment demonstrates the generation of Hamming Code for error detection and correction. By encoding data with parity bits and using logical XOR operations, we can detect and fix single-bit errors. This technique is widely used in digital communication systems to ensure data integrity.
+
+---
+
+#
